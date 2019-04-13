@@ -1,4 +1,5 @@
-FROM ruby:2.5
+FROM ruby:2.6.1
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - && apt-get install -y nodejs
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN mkdir /products-list
 WORKDIR /products-list
