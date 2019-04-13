@@ -1,0 +1,14 @@
+%p#notice= notice
+%p
+  %strong Name:
+  = @category.name
+
+%p
+  %strong Filters:
+  - @category.filters.each do |filter|
+    %p= filter.name
+
+%p
+  %strong Products:
+  - @category.all_products.each do |product|
+    %p= product.name
