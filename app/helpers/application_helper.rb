@@ -1,28 +1,37 @@
 module ApplicationHelper
-  def search_field(filter, value)
-    "<label for='#{filter.name}'>#{filter.name}:</label>
-    <input name='search[][parameter_id]' type='hidden' id='parameter_#{filter.id}' value='#{filter.id}'/>".html_safe +
-
+  def search_field(filter, params)
+    "<div class='row'>
+      <div class='col'>
+        <label for='#{filter.name}'>#{filter.name}:</label>
+        <input name='search[][parameter_id]' type='hidden' id='parameter_#{filter.id}' value='#{filter.id}'/>
+      </div>".html_safe +
     if filter.data_type == 'array'
       select = ''
-      select << "<select name='search[][value]' id='parameter_#{filter.id}_value'>"
-      select << "<option></option>"
+      select << "<div class='col'><select class='form-control' name='search[][value]' id='parameter_#{filter.id}_value'>"
+      select << '<option></option>'
       filter.options.each do |option|
-        select << "<option value='#{option}' #{'selected' if option == value}>#{option}</option>"
+        select << "<option value='#{option}' #{'selected' if option == params[:value] if params}>#{option}</option>"
       end
-      select << '</select>'
+      select << '</select></div></div>'
       select.html_safe
     else
-      type =
-        case filter.data_type
-        when 'decimal', 'integer'
-          'number'
-        when 'string'
-          'text'
-        else
-          'text'
-        end
-      "<input name='search[][value]' type='#{type}' id='parameter_#{filter.id}_value' value='#{value}'/>".html_safe
+      case filter.data_type
+      when 'decimal', 'integer'
+        "<div class='col'>
+          <input class='form-control required' name='search[][value_from]' type='number' id='parameter_#{filter.id}_value_from' value='#{params[:value_from] if params}'/>
+        </div>
+        <div class='col'>
+          <input class='form-control' name='search[][value_to]' type='number' id='parameter_#{filter.id}_value_to' value='#{params[:value_to] if params}'/>
+        </div></div>".html_safe
+      when 'string'
+        "<div class='col'>
+          <input class='form-control' name='search[][value]' type='text' id='parameter_#{filter.id}_value' value='#{params[:value] if params}'/>
+        </div></div>".html_safe
+      when 'boolean'
+        "<div class='col'>
+          <input name='search[][value]' type='checkbox' id='parameter_#{filter.id}_value' value='#{params[:value] if params}'/>
+        </div></div>".html_safe
+      end
     end
   end
 end
