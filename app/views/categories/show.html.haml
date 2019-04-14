@@ -21,6 +21,7 @@
               = search_field(filter, params[:search] ? params[:search][i] : nil)
           = submit_tag 'Szukaj', class: 'btn btn-primary'
     .col-7
+      = paginate @products
       %p
         - @products.each do |product|
           %p

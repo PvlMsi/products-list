@@ -5,6 +5,8 @@ class Product < ApplicationRecord
 
   accepts_nested_attributes_for :product_values
 
+  paginates_per 10
+
   def self.search(filters)
     return all unless filters
 

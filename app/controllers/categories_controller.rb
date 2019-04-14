@@ -10,7 +10,8 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    @products = @category.all_products.search(params[:search])
+    @products =
+      @category.all_products.search(params[:search]).page(params[:page])
   end
 
   # GET /categories/new
