@@ -17,10 +17,8 @@
         = form_tag(category_path(@category), method: 'get') do
           - @category.filters.each_with_index do |filter, i|
             %p
-              = label_tag filter.name
-              = hidden_field_tag 'search[][parameter_id]', filter.id
-              = text_field_tag 'search[][value]', "#{params[:search][i][:value] if params[:search]}"
-          = submit_tag 'Search', class: 'btn btn-primary'
+              = search_field(filter, "#{params[:search][i][:value] if params[:search]}")
+          = submit_tag 'Szukaj', class: 'btn btn-primary'
     .col-8
       %p
         - @products.each do |product|

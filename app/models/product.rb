@@ -17,6 +17,6 @@ class Product < ApplicationRecord
         )
       )
     end
-    results.inject { |sum, result| sum & result }
+    results.empty? ? all : results.inject { |sum, result| sum & result }
   end
 end
