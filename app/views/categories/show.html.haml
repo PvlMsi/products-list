@@ -1,14 +1,28 @@
-%p#notice= notice
-%p
-  %strong Name:
-  = @category.name
+%nav.navbar.navbar-light.bg-light
+  %h2= @category.name
+- if @category.path.size > 1
+  - @category.path[0...-1].each do |category|
+    = link_to category.name, category_path(category)
+    = ' - '
+  %strong= @category.path.last.name
 
-%p
-  %strong Filters:
-  - @category.filters.each do |filter|
-    %p= filter.name
-
-%p
-  %strong Products:
-  - @category.all_products.each do |product|
-    %p= product.name
+.container
+  .row
+    .col-4
+      = 'Podkategorie:' if @category.children.any?
+      - @category.children.each do |category|
+        %p= link_to category.name, category_path(category)
+      %p
+        %strong Filters:
+        = form_tag(category_path(@category), method: 'get') do
+          - @category.filters.each_with_index do |filter, i|
+            %p
+              = label_tag filter.name
+              = hidden_field_tag 'search[][parameter_id]', filter.id
+              = text_field_tag 'search[][value]', "#{params[:search][i][:value] if params[:search]}"
+          = submit_tag 'Search', class: 'btn btn-primary'
+    .col-8
+      %p
+        - @products.each do |product|
+          %p= product.name
+          

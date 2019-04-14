@@ -13,7 +13,6 @@ class Category < ApplicationRecord
   def all_products
     return products if childless?
 
-    subtree.select(&:childless?).map(&:products)
-           .inject { |sum, product| sum + product }
+    Product.where(id: subtree.select(&:childless?).map(&:products).flatten)
   end
 end
