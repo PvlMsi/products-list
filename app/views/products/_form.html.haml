@@ -1,14 +1,14 @@
-= simple_form_for product do |f|
-  - if product.errors.any?
-    #error_explanation
-      %h2
-        = pluralize(product.errors.count, "error")
-        prohibited this product from being saved:
-      %ul
-        - product.errors.full_messages.each do |message|
-          %li= message
-  .field
-    = f.input :name, label: 'Nazwa:'
-  .field
-    = f.input :category_id, collection: Category.select(&:childless?)
-  #product_values
+.conteiner
+  = simple_form_for product do |f|
+    - if product.errors.any?
+      #error_explanation
+        %h2
+          = pluralize(product.errors.count, "error")
+          prohibited this product from being saved:
+        %ul
+          - product.errors.full_messages.each do |message|
+            %li= message
+    = f.input :name, label: 'Nazwa:', input_html: { class: 'form-control' }
+    = f.input :category_id, collection: Category.select(&:childless?), input_html: { class: 'form-control' }
+    #product_values
+    = f.submit 'Wyślij', class: 'btn btn-primary'

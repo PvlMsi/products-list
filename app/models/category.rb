@@ -12,6 +12,8 @@ class Category < ApplicationRecord
 
   before_create :check_parameters
 
+  scope :with_children, -> { order(name: :asc).select(&:has_children?) }
+
   def filters
     return parameters if childless?
 

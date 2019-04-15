@@ -10,8 +10,7 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    @products =
-      @category.all_products.search(params[:search]).page(params[:page])
+    @products = @category.all_products.search(params[:search]).page(params[:page])
   end
 
   # GET /categories/new
@@ -64,8 +63,9 @@ class CategoriesController < ApplicationController
   end
 
   def parameters
+    @parameters = @category.parameters
     respond_to do |format|
-      format.json { render json: @category.parameters }
+      format.js
     end
   end
 

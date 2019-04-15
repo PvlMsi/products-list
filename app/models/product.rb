@@ -7,6 +7,9 @@ class Product < ApplicationRecord
 
   paginates_per 10
 
+  validates :name, presence: true
+  validates :category, presence: true
+
   def self.search(filters)
     return all unless filters
 
