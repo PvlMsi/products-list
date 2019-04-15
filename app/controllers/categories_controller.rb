@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy, :parameters]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :parameters, :children]
 
   # GET /categories
   # GET /categories.json
@@ -32,6 +32,11 @@ class CategoriesController < ApplicationController
   # POST /categories.json
   def create
     @category = Category.new(category_params)
+
+    if params[:inheritance]
+      @category.parameters =
+        Category.find(params[:inheritance_target]).parameters
+    end
 
     respond_to do |format|
       if @category.save
@@ -75,6 +80,14 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def children
+    @children = @category.children
+    respond_to do |format|
+      format.js
+    end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
@@ -84,7 +97,7 @@ class CategoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
       params.require(:category).permit(:name, :parent_id,
-        parameters_attributes: [ [:name, :data_type , options: []] ]
+        parameters_attributes: [ [:name, :data_type, options: []] ]
       )
     end
 end

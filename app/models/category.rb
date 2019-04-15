@@ -1,5 +1,5 @@
 class Category < ApplicationRecord
-  has_ancestry orphan_strategy: :adopt
+  has_ancestry
   has_many :categories_parameters
   has_many :parameters, through: :categories_parameters
   has_many :products, dependent: :destroy

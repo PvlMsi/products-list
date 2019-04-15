@@ -1,4 +1,5 @@
-root = Category.create(name: 'Root')
+root = Category.new(name: 'Root')
+root.save(validate: false)
 motoryzacja = Category.create(name: 'Motoryzacja', parent: root)
 telefony = Category.create(name: 'Telefony', parent: root)
 apple = Category.create(name: 'Apple', parent: telefony)
