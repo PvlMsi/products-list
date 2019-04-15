@@ -1,6 +1,6 @@
 .col.nested-fields.form-group
   = f.input :name, label: 'Nazwa', input_html: { class: 'form-control' }
-  = f.input :data_type, collection: [['Liczba całkowita', 'integer'], ['Liczba naturalna', 'float'], ['Prawda/Fałsz', 'boolean'], ['Tekst', 'string'], ['Słownik', 'array']], include_blank: true, label: 'Typ danych', input_html: { class: 'form-control data-type-select' }
+  = f.input :data_type, collection: [['Liczba naturalna', 'integer'], ['Liczba wymierna', 'float'], ['Prawda/Fałsz', 'boolean'], ['Tekst', 'string'], ['Słownik', 'array']], include_blank: true, label: 'Typ danych', input_html: { class: 'form-control data-type-select' }
   #options-group.row{ style: 'display: none;' }
     .col-6
       %strong= 'Słownik:'

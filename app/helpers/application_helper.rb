@@ -16,7 +16,7 @@ module ApplicationHelper
       select.html_safe
     else
       case filter.data_type
-      when 'decimal', 'integer'
+      when 'decimal', 'integer', 'float'
         "<div class='col'>
           <input class='form-control required' name='search[][value_from]' type='number' id='parameter_#{filter.id}_value_from' value='#{params[:value_from] if params}'/>
         </div>

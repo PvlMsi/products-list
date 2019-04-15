@@ -1,16 +1,17 @@
 %p#notice= notice
-%h1 Categories
-%table
-  %thead
-    %tr
-      %th Name
-      %th{:colspan => "3"}
-  %tbody
-    - @categories.each do |category|
+.container
+  %h4 Kategorie
+  %table.table
+    %thead
       %tr
-        %td= category.name
-        %td= link_to 'Show', category
-        %td= link_to 'Edit', edit_category_path(category)
-        %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
-%br/
-= link_to 'New Category', new_category_path
+        %th Nazwa
+        %th
+    %tbody
+      - @categories.except_root.each do |category|
+        %tr
+          %td= category.name
+          %td.text-right
+            = link_to 'Podgląd', category, class: 'btn btn-primary'
+            = link_to 'Edytuj', edit_category_path(category), class: 'btn btn-warning'
+            = link_to 'Usuń', category, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' }
+  = link_to 'Nowa kategoria', new_category_path, class: 'btn btn-primary'

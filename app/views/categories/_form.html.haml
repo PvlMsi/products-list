@@ -12,7 +12,7 @@
       .field
         = f.input :name, label: 'Nazwa:', input_html: { class: 'form-control' }
       .field
-        = f.input :parent_id, collection: Category.with_children, as: :select, label: 'Kategoria rodzic', input_html: { class: 'form-control' }
+        = f.input :parent_id, collection: Category.all_but_current(category).without_parameters, as: :select, label: 'Kategoria rodzic', input_html: { class: 'form-control' }
       %strong Parametry
       #parameters
         .row
