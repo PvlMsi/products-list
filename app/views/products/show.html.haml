@@ -1,10 +1,15 @@
-%p#notice= notice
-%p
-  %strong Name:
-  = @product.name
-%p
-  %strong Category:
-  = @product.category
-= link_to 'Edit', edit_product_path(@product)
-|
-= link_to 'Back', products_path
+.container
+  %p#notice= notice
+
+  %p
+    %strong Nazwa:
+    = @product.name
+  %p
+    %strong Kategoria:
+    = @product.category.name
+  - @product.product_values.each do |pv|
+    %p
+      %strong= pv.parameter.name + ': '
+      = pv.value
+  = link_to 'Edytuj', edit_product_path(@product), class: 'btn btn-warning'
+  = link_to 'Powrót', :back, class: 'btn btn-secondary'

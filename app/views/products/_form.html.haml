@@ -9,6 +9,8 @@
           - product.errors.full_messages.each do |message|
             %li= message
     = f.input :name, label: 'Nazwa:', input_html: { class: 'form-control' }
-    = f.input :category_id, collection: Category.select(&:childless?), input_html: { class: 'form-control' }
+    = f.input :category_id, collection: Category.select(&:childless?), label: 'Kategoria', input_html: { class: 'form-control' }
     #product_values
-    = f.submit 'Wyślij', class: 'btn btn-primary'
+    %nav.navbar.row.actions
+      = link_to 'Powrót', products_path, class: 'btn btn-secondary'
+      = f.submit 'Wyślij', class: 'btn btn-primary'

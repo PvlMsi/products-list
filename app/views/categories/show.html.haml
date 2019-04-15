@@ -1,29 +1,27 @@
-%nav.navbar.navbar-light.bg-light
-  %h2= @category.name
+%ol.breadcrumb
+  - @category.path[0...-1].each do |category|
+    %li.breadcrumb-item= link_to category.name, category_path(category)
+  %li.breadcrumb-item.active= @category.path.last.name
 .container
   .row
-    %nav.navbar
-      - if @category.path.size > 1
-        - @category.path[0...-1].each do |category|
-          = link_to category.name, category_path(category)
-          = ' - '
-        %strong= @category.path.last.name
-  .row
     .col-5
-      %strong= 'Podkategorie:' if @category.children.any?
-      - @category.children.each do |category|
-        %p= link_to category.name, category_path(category)
-      %p
-        %strong= 'Filtry:'
-        = form_tag(category_path(@category), method: 'get') do
-          - @category.filters.each_with_index do |filter, i|
-            %p
-              = search_field(filter, params[:search] ? params[:search][i] : nil)
-          = submit_tag 'Szukaj', class: 'btn btn-primary'
+      .card.mb-3.p-3
+        %strong= 'Podkategorie:' if @category.children.any?
+        - @category.children.each do |category|
+          %p= link_to category.name, category_path(category)
+        %p
+          %strong= 'Filtry:'
+          = form_tag(category_path(@category), method: 'get') do
+            - @category.filters.each_with_index do |filter, i|
+              %p
+                = search_field(filter, params[:search] ? params[:search][i] : nil)
+            = submit_tag 'Szukaj', class: 'btn btn-primary'
     .col-7
       = paginate @products
-      %p
-        - @products.each do |product|
-          %p
-            = product.name
+      %table.table
+        %tbody
+          - @products.each do |product|
+            %tr
+              %td= product.name
+              %td= link_to 'Podgląd', product, class: 'btn btn-primary'
           

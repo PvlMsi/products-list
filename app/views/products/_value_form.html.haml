@@ -1,6 +1,6 @@
-.row
-  - parameters.each do |parameter|
-    %p
+- parameters.each do |parameter|
+  .row
+    .col
       = parameter.name
       = hidden_field_tag "product[product_values_attributes[][parameter_id]]", parameter.id
       - if parameter.data_type == 'array'

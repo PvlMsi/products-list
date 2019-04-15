@@ -1,0 +1,6 @@
+%nav.navbar.navbar-dark.bg-dark
+  .container-fluid
+  = link_to 'Produkty', category_path(root), class: 'navbar-brand'
+  %ul.nav.navbar-nav
+    %li= link_to 'Zarządzaj produktami', products_path, class: 'nav-link'
+    %li= link_to 'Zarządzaj kategoriami', categories_path, class: 'nav-link'

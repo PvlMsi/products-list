@@ -10,7 +10,13 @@ class CategoriesController < ApplicationController
   # GET /categories/1
   # GET /categories/1.json
   def show
-    @products = @category.all_products.search(params[:search]).page(params[:page])
+    @q = @category.all_products.search(params[:search])
+    @products =
+      if @q.is_a?(Array)
+        Kaminari.paginate_array(@q).page(params[:page]).per(10)
+      else
+        @q.page(params[:page])
+      end
   end
 
   # GET /categories/new
