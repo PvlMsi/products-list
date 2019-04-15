@@ -63,6 +63,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'ancestry'
 gem 'bootstrap', '~> 4.3.1'
+gem 'cocoon'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'kaminari'
+gem 'simple_form'

@@ -1,0 +1,10 @@
+.col.nested-fields.form-group
+  = f.input :name, label: 'Nazwa', input_html: { class: 'form-control' }
+  = f.input :data_type, collection: [['Liczba całkowita', 'integer'], ['Liczba naturalna', 'float'], ['Prawda/Fałsz', 'boolean'], ['Tekst', 'string'], ['Słownik', 'array']], include_blank: true, label: 'Typ danych', input_html: { class: 'form-control data-type-select' }
+  #options-group.row{ style: 'display: none;' }
+    .col-6
+      %strong= 'Słownik:'
+      = f.fields_for 'options' do |option_field|
+        = option_field.input '', label: false, input_html: { class: 'form-control' }
+  .mt-2.text-center
+    = link_to_remove_association "Usuń parametr", f, class: 'btn btn-sm btn-danger'

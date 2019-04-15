@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: [:show, :edit, :update, :destroy, :parameters]
 
   # GET /categories
   # GET /categories.json
@@ -63,6 +63,12 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def parameters
+    respond_to do |format|
+      format.json { render json: @category.parameters }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_category
@@ -71,6 +77,8 @@ class CategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def category_params
-      params.require(:category).permit(:name)
+      params.require(:category).permit(:name, :parent_id,
+        parameters_attributes: [ [:name, :data_type , options: []] ]
+      )
     end
 end

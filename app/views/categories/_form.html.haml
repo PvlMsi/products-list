@@ -1,14 +1,26 @@
-= form_with(model: category, local: true) do |form|
+= simple_form_for category do |f|
   - if category.errors.any?
     #error_explanation
-      %h2
+      %h4
         = pluralize(category.errors.count, "error")
         prohibited this category from being saved:
       %ul
         - category.errors.full_messages.each do |message|
           %li= message
-  .field
-    = form.label :name
-    = form.text_field :name
-  .actions
-    = form.submit
+  .row
+    .col.form-group
+      .field
+        = f.input :name, label: 'Nazwa:', input_html: { class: 'form-control' }
+      .field
+        = f.input :parent_id, collection: Category.select(&:has_children?), as: :grouped_select, group_method: :children, label: 'Kategoria rodzic', input_html: { class: 'form-control' }
+      %strong Parametry
+      #parameters
+        .row
+          = f.simple_fields_for :categories_parameters do |parameter_form|
+            = render 'parameter_fields', f: parameter_form
+        .mt-2.text-center
+          = link_to_add_association 'Dodaj parametr', f, :parameters, class: 'btn btn-sm btn-primary'
+  %nav.navbar.row.actions
+    = link_to 'Powrót', categories_path, class: 'btn btn-secondary'
+    = f.button :submit, 'Wyślij', class: 'btn btn-primary'
+
