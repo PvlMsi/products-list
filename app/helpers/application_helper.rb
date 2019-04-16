@@ -29,7 +29,16 @@ module ApplicationHelper
         </div></div>".html_safe
       when 'boolean'
         "<div class='col'>
-          <input name='search[][value]' type='checkbox' id='parameter_#{filter.id}_value' value='#{params[:value] if params}'/>
+          <div class='btn-group btn-group-toggle' data-toggle='buttons'>
+            <label class='btn btn-secondary #{'active' if params && params[:value] == 'true'}' >
+              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='true'>
+              Tak
+            </label>
+            <label class='btn btn-secondary #{'active' if params && params[:value] == 'false'}'>
+              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='false'>
+              Nie
+            </label>
+          </div>
         </div></div>".html_safe
       end
     end

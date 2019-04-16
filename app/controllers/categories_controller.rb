@@ -33,7 +33,7 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
 
-    if params[:inheritance]
+    if params[:inheritance] == 'true'
       @category.parameters =
         Category.find(params[:inheritance_target]).parameters
     end

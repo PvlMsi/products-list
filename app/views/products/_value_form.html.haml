@@ -1,9 +1,19 @@
 - parameters.each do |parameter|
   .row
-    .col
+    .col.mt-3
       = parameter.name
       = hidden_field_tag "product[product_values_attributes[][parameter_id]]", parameter.id
       - if parameter.data_type == 'array'
         = select_tag "product[product_values_attributes[][value]]", options_for_select(parameter.options), include_blank: true, class: 'form-control'
+      - elsif parameter.data_type == 'boolean'
+        .btn-group.btn-group-toggle{ 'data-toggle':'buttons' }
+          %label.btn.btn-secondary
+            = radio_button_tag 'product[product_values_attributes[][value]]', true
+            Tak
+          %label.btn.btn-secondary.active
+            =radio_button_tag 'product[product_values_attributes[][value]]', false, true
+            Nie
+      - elsif parameter.data_type == 'number'
+        = text_field_tag "product[product_values_attributes[][value]]", nil, class: 'form-control'
       - else
         = text_field_tag "product[product_values_attributes[][value]]", nil, class: 'form-control'
