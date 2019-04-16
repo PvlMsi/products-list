@@ -30,12 +30,12 @@ module ApplicationHelper
       when 'boolean'
         "<div class='col'>
           <div class='btn-group btn-group-toggle' data-toggle='buttons'>
-            <label class='btn btn-secondary #{'active' if params && params[:value] == 'true'}' >
-              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='true'>
+            <label class='btn btn-secondary #{'active' if params && params[:value] == 't'}' >
+              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='t'>
               Tak
             </label>
-            <label class='btn btn-secondary #{'active' if params && params[:value] == 'false'}'>
-              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='false'>
+            <label class='btn btn-secondary #{'active' if params && params[:value] == 'f'}'>
+              <input type='radio' name='search[][value]' id='parameter_#{filter.id}_value' value='f'>
               Nie
             </label>
           </div>
