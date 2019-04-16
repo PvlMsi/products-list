@@ -1,0 +1,38 @@
+pl:
+  views:
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"
+  errors:
+    messages:
+      blank: 'nie może być puste'
+      must exist: 'musi istnieć'
+      taken: 'jest już zajęta'
+      inclusion: 'nie należy do zdefiniowanych wartości'
+  activerecord:
+    errors:
+      models:
+        product:
+          attributes:
+            category:
+              required: 'jest wymagana'
+    models:
+      category:
+        one: 'Kategoria'
+        other: 'Kategorie'
+      parameter:
+        one: 'Parametr'
+        other: 'Parametry'
+    attributes:
+      category:
+        name: 'Nazwa'
+        parent_id: 'Kategoria rodzic'
+      product:
+        name: 'Nazwa'
+        category: 'Kategoria'
+      parameter:
+        name: 'Nazwa'
+        data_type: 'Typ danych'

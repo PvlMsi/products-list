@@ -34,8 +34,12 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     if params[:inheritance] == 'true'
-      @category.parameters =
-        Category.find(params[:inheritance_target]).parameters
+      if params[:inheritance_target].present?
+        @category.parameters =
+          Category.find(params[:inheritance_target]).parameters
+      else
+        @category.errors.add(:base, 'Wskaż kategorie po której dziedziczyć parametry')
+      end
     end
 
     respond_to do |format|
