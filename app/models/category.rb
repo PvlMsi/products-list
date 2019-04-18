@@ -11,10 +11,12 @@ class Category < ApplicationRecord
   accepts_nested_attributes_for :categories_parameters
 
   before_create :check_parameters
+  before_update :clear_parameters
 
   scope :without_parameters, -> { order(name: :asc).reject { |c| c.parameters.any? } }
   scope :all_but_current, ->(category) { where.not(id: category) }
   scope :except_root, -> { where.not(name: 'Root') }
+  scope :childless, -> { select(&:has_children?) }
 
   def filters
     return parameters if childless?
@@ -30,6 +32,19 @@ class Category < ApplicationRecord
   end
 
   private
+
+  def clear_parameters
+    changed_parameters =
+      parameters.select{ |p| p.changed? && !p.new_record? }.map do |parameter|
+        parameters.delete(parameter)
+        next Parameter.where(
+          name: parameter.name,
+          data_type: parameter.data_type
+        ).first_or_create
+        parameter.reload
+      end
+    parameters << changed_parameters
+  end
 
   def check_parameters
     existing_params = []

@@ -25,9 +25,8 @@
           .col
             #inheritance_field
       #own_parameters{ style: 'display: none;' }
-        .row
-          = f.simple_fields_for :categories_parameters do |parameter_form|
-            = render 'parameter_fields', f: parameter_form
+        = f.simple_fields_for :parameters do |parameter_form|
+          = render 'parameter_fields', f: parameter_form
         .mt-2.text-center
           = link_to_add_association 'Dodaj parametr', f, :parameters, class: 'btn btn-sm btn-primary'
   %nav.navbar.row.actions
