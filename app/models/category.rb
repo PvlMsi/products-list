@@ -39,30 +39,31 @@ class Category < ApplicationRecord
         parameters.delete(parameter)
         next Parameter.where(
           name: parameter.name,
-          data_type: parameter.data_type
+          data_type: parameter.data_type,
+          options: param.options
         ).first_or_create
+
         parameter.reload
       end
+      
     parameters << changed_parameters
   end
 
   def check_parameters
-    existing_params = []
-    new_params = parameters
-    parameters.each do |param|
+    existing_params = parameters.map do |param|
       param.options.reject!(&:blank?)
 
-      existing_parameter = Parameter.where(
+      existing_param = Parameter.where(
         name: param.name.capitalize,
         data_type: param.data_type,
         options: param.options
       ).first
-      if existing_parameter
-        existing_params << existing_parameter
-        new_params.delete(param)
+      if existing_param
+        self.parameters.delete(param)
+        next existing_param
       end
     end
 
-    self.parameters = existing_params + new_params
+    self.parameters << existing_params
   end
 end
