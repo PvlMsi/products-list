@@ -1,16 +1,9 @@
 .container
-  %h4 Kategorie
-  %table.table
-    %thead
-      %tr
-        %th Nazwa
-        %th
-    %tbody
-      - @categories.except_root.each do |category|
-        %tr
-          %td= category.name
-          %td.text-right
-            = link_to 'Podgląd', category, class: 'btn btn-primary'
-            = link_to 'Edytuj', edit_category_path(category), class: 'btn btn-warning'
-            = link_to 'Usuń', category, class: 'btn btn-danger', method: :delete, data: { confirm: 'Czy jesteś pewien?' }
-  = link_to 'Nowa kategoria', new_category_path, class: 'btn btn-primary'
+  .row
+    .col-3
+    .col-6
+      %h4.text-center.mt-4 Kategorie
+      = category_tree(@categories.arrange)
+      .text-center.mt-4
+        = link_to 'Nowa kategoria', new_category_path, class: 'btn btn-primary'
+    .col-3
