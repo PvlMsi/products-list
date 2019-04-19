@@ -1,3 +1,4 @@
+# model associates product with parameters and stores values of its parameters
 class ProductValue < ApplicationRecord
   belongs_to :product
   belongs_to :parameter

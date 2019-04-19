@@ -12,6 +12,6 @@
           %td= product.name
           %td.text-right
             = link_to 'Podgląd', product, class: 'btn btn-primary'
-            = link_to 'Edytuj', edit_product_path(product), class: 'btn btn-warning'
+            = link_to 'Edytuj', edit_product_path(product), class: 'btn btn-warning', data: { turbolinks: false }
             = link_to 'Usuń', product, class: 'btn btn-danger', method: :delete, data: { confirm: 'Czy jesteś pewien?' }
-  = link_to 'Nowy produkt', new_product_path, class: 'btn btn-primary'
+  = link_to 'Nowy produkt', new_product_path, class: 'btn btn-primary', data: { turbolinks: false }

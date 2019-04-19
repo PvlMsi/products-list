@@ -40,7 +40,7 @@ class Category < ApplicationRecord
         next Parameter.where(
           name: parameter.name,
           data_type: parameter.data_type,
-          options: param.options
+          options: parameter.options
         ).first_or_create
 
         parameter.reload
@@ -50,20 +50,20 @@ class Category < ApplicationRecord
   end
 
   def check_parameters
-    existing_params = parameters.map do |param|
-      param.options.reject!(&:blank?)
+    existing_params = parameters.map do |parameter|
+      parameter.options.reject!(&:blank?)
 
       existing_param = Parameter.where(
-        name: param.name.capitalize,
-        data_type: param.data_type,
-        options: param.options
+        name: parameter.name.capitalize,
+        data_type: parameter.data_type,
+        options: parameter.options
       ).first
       if existing_param
-        self.parameters.delete(param)
+        self.parameters.delete(parameter)
         next existing_param
       end
     end
 
-    self.parameters << existing_params
+    self.parameters << existing_params.compact
   end
 end

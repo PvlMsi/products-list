@@ -1,11 +1,31 @@
-.col.nested-fields.form-group
-  = f.input :name, label: 'Nazwa', input_html: { class: 'form-control' }
-  = f.input :data_type, collection: [['Liczba naturalna', 'integer'], ['Liczba wymierna', 'float'], ['Prawda/Fałsz', 'boolean'], ['Tekst', 'string'], ['Słownik', 'array']], include_blank: true, label: 'Typ danych', input_html: { class: 'form-control data-type-select' }
-  #options-group.row{ style: 'display: none;' }
-    .col-6
-      %strong= 'Słownik:'
+.row
+  .nested-fields.form-group
+    = f.input :name, label: 'Nazwa', input_html: { class: 'form-control' }
+    = f.input :data_type, collection: [['Liczba naturalna', 'integer'], ['Liczba wymierna', 'float'], ['Prawda/Fałsz', 'boolean'], ['Tekst', 'string'], ['Słownik', 'array']], include_blank: true, label: 'Typ danych', input_html: { class: 'form-control data-type-select' }
+    %div{ style: 'display: none;', name: "#{f.object_name}[options_group]" }
       = f.fields_for 'options' do |option_field|
-        = option_field.input '', label: false, input_html: { class: 'form-control' }
-  .mt-2.text-center
-    = link_to_remove_association "Usuń parametr", f, class: 'btn btn-sm btn-danger'
-  %hr
+        %div{ name: "#{f.object_name}[options_fields]" }
+          - f.object.options.each do |option|
+            = option_field.input '', label: false, input_html: { class: 'form-control', value: option }
+      = link_to 'Dodaj opcje', 'javascript:;', class: 'btn btn-primary btn-sm', name: "#{f.object_name}[add_option]"
+    .mt-2.text-center
+      = link_to_remove_association "Usuń parametr", f, class: 'btn btn-sm btn-danger'
+    %hr
+
+:coffee
+  jQuery ->
+    toggle_options = (value) ->
+      if (value == 'array')
+        $("[name='#{f.object_name}[options_group]']").show()
+      else
+        $("[name='#{f.object_name}[options_group]']").hide()
+
+    toggle_options($("[name='#{f.object_name}[data_type]']").val())
+
+    $("[name='#{f.object_name}[data_type]']").on 'change', ->
+      toggle_options(this.value)
+
+    $("[name='#{f.object_name}[add_option]'").on 'click', ->
+      $("[name='#{f.object_name}[options_fields]']").append(
+        "<input class='string required form-control' type='text' name='#{f.object_name}[options][]' >"
+      )

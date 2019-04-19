@@ -10,7 +10,7 @@ module CategoriesHelper
           ) +
           content_tag(
             :td, (
-              link_to('Edytuj', edit_category_path(parent), class: 'btn btn-warning') + ' ' +
+              link_to('Edytuj', edit_category_path(parent), class: 'btn btn-warning', data: { turbolinks: false }) + ' ' +
               link_to('Usuń', parent, class: 'btn btn-danger',
                 method: :delete, data: { confirm: 'Czy jesteś pewien?' }
               )

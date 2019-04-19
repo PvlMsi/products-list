@@ -5,5 +5,5 @@
       %h4.text-center.mt-4 Kategorie
       = category_tree(@categories.arrange)
       .text-center.mt-4
-        = link_to 'Nowa kategoria', new_category_path, class: 'btn btn-primary'
+        = link_to 'Nowa kategoria', new_category_path, class: 'btn btn-primary', data: { turbolinks: false }
     .col-3
