@@ -16,7 +16,7 @@ class Category < ApplicationRecord
   scope :without_parameters, -> { order(name: :asc).reject { |c| c.parameters.any? } }
   scope :all_but_current, ->(category) { where.not(id: category) }
   scope :except_root, -> { where.not(name: 'Root') }
-  scope :childless, -> { select(&:has_children?) }
+  scope :with_children, -> { select(&:has_children?) }
 
   def filters
     return parameters if childless?
@@ -26,9 +26,7 @@ class Category < ApplicationRecord
   end
 
   def all_products
-    return products if childless?
-
-    Product.where(id: subtree.select(&:childless?).map(&:products).flatten)
+    childless? ? products : Product.where(id: indirects.map(&:product_ids).flatten)
   end
 
   private
