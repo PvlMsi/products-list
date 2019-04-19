@@ -26,7 +26,7 @@ class Category < ApplicationRecord
   end
 
   def all_products
-    childless? ? products : Product.where(id: indirects.map(&:product_ids).flatten)
+    childless? ? products : Product.where(id: subtree.map(&:product_ids).flatten)
   end
 
   private
