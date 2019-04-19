@@ -16,7 +16,6 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @product.product_values.build
-    @categories = collection_for_parent_select
   end
 
   # GET /products/1/edit
@@ -64,19 +63,6 @@ class ProductsController < ApplicationController
   end
 
   private
-
-  def collection_for_parent_select
-    @categories = ancestry_options(Category.unscoped.arrange(order: 'name')) { |category| "<b>#{'-'.html_safe * category.depth} #{category.name}</b>".html_safe }
-  end
-
-  def ancestry_options(items)
-    result = []
-    items.map do |item, sub_items|
-      result << [ yield(item), item.id ]
-      result += ancestry_options(sub_items) {|category| "<b>#{'-'.html_safe * category.depth} #{category.name}</b>".html_safe }
-    end
-    result
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_product
