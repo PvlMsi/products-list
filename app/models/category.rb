@@ -29,6 +29,10 @@ class Category < ApplicationRecord
     childless? ? products : Product.where(id: subtree.map(&:product_ids).flatten)
   end
 
+  def deepest_children
+    children.select(&:childless?)
+  end
+
   private
 
   def clear_parameters
